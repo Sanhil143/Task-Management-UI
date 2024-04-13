@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Dashboard from "../common/Dashboard";
 
 const Login = () => {
+  const navigate = useNavigate()
   const [formdata, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +21,7 @@ const Login = () => {
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userType", response.data.userType);
+        // navigate('/dashboard')
       }
     } catch (error) {
       console.error(error.message);
