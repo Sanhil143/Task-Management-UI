@@ -1,37 +1,38 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Login = () => {
-  const navigate = useNavigate()
+const Signup = () => {
   const [formdata, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        "http://localhost:5000/auth/signup",
         formdata
       );
-      if (response.data) {
+      if (response.data.data) {
+        console.log(response.data.data);
         localStorage.setItem("accessToken", response.data.token);
-        localStorage.setItem("userId", response.data.userId);
-        localStorage.setItem("userType", response.data.userType);
-        navigate('/dashboard')
+        localStorage.setItem("userId", response.data.data.id);
+        localStorage.setItem("userType", response.data.data.role);
       }
     } catch (error) {
       console.error(error.message);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formdata, [name]: value });
   };
-  
-  //variable css
+
   const mainDiv = {
     display: "flex",
     width: "100%",
@@ -41,19 +42,19 @@ const Login = () => {
     border: "5px solid orange",
     boxSizing: "border-box",
   };
-  const formStyle = {
+  const formDiv = {
     width: "400px",
-    height: "400px",
+    height: "500px",
     textAlign: "center",
     border: "1px solid black",
     boxShadow: "1px 1px grey",
   };
-  const fieldBar = {
-    marginTop: "20px",
-  };
-  const loginContainer = {
+  const signupContainer = {
     position: "relative",
     top: "90px",
+  };
+  const fieldBar = {
+    marginTop: "20px",
   };
   const formLabel = {
     display: "inline-block",
@@ -73,19 +74,46 @@ const Login = () => {
     cursor: "pointer",
   };
   return (
-    <div style={mainDiv}>
-      <form style={formStyle} onSubmit={handleSubmit}>
-        <div style={loginContainer}>
+    <div style={mainDiv} onSubmit={handleClick}>
+      <form style={formDiv}>
+        <div style={signupContainer}>
+          <div style={fieldBar}>
+            <label style={formLabel} htmlFor="fname">
+              firstname
+            </label>
+            <input
+              style={formInput}
+              type="text"
+              id="fname"
+              name="firstName"
+              value={formdata.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div style={fieldBar}>
+            <label style={formLabel} htmlFor="lname">
+              lastname
+            </label>
+            <input
+              style={formInput}
+              type="text"
+              id="lname"
+              name="lastName"
+              value={formdata.lastName}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div style={fieldBar}>
             <label style={formLabel} htmlFor="email">
               email
             </label>
             <input
               style={formInput}
+              type="email"
               id="email"
               name="email"
-              type="text"
-              placeholder="email"
               value={formdata.email}
               onChange={handleChange}
               required
@@ -97,20 +125,20 @@ const Login = () => {
             </label>
             <input
               style={formInput}
+              type="password"
               id="password"
               name="password"
-              type="password"
-              placeholder="password"
               value={formdata.password}
               onChange={handleChange}
               required
             />
           </div>
           <button style={buttonInput} type="submit">
-            login
+            signup
           </button>
-          <p>create your new Journey with us&nbsp;
-          <Link to="/signup">Signup</Link> 
+          <p>
+            already have a acount?&nbsp;
+            <Link to="/">Login</Link>
           </p>
         </div>
       </form>
@@ -118,4 +146,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
