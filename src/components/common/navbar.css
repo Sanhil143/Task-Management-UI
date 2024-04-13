@@ -1,6 +1,8 @@
 
 .liDiv{
   list-style: none;
+  width: 70px;
+  text-align: center;
   margin-left: 15px;
   padding: 8px;
   border: 1px solid transparent;
@@ -11,6 +13,7 @@
 .liDiv:hover{
   padding: 8px;
   border: 1px solid black;
-  border-radius: 15%;
-  background-color: white;
+  border-radius: 20px;
+  color: whitesmoke !important;
+  background-color: thistle;
 }

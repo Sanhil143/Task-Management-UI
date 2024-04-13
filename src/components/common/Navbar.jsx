@@ -1,6 +1,11 @@
 import React from "react";
 import "./navbar.css";
-const Navbar = () => {
+
+const Navbar = ({ setPage }) => {
+  const handleClick = (page) => {
+    setPage(page);
+  };
+
   const mainDiv = {
     height: "50px",
     width: "100%",
@@ -38,9 +43,15 @@ const Navbar = () => {
           <h3>Task Manager App</h3>
         </div>
         <ul style={ulDiv}>
-          <li className="liDiv">Tasks</li>
-          <li className="liDiv">Teams</li>
-          <li className="liDiv">Profile</li>
+          <li className="liDiv" onClick={() => handleClick("task")}>
+            Tasks
+          </li>
+          <li className="liDiv" onClick={() => handleClick("team")}>
+            Teams
+          </li>
+          <li className="liDiv" onClick={() => handleClick("profile")}>
+            Profile
+          </li>
         </ul>
       </div>
       <ul style={ul2Div}>
