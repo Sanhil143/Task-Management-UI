@@ -1,4 +1,5 @@
 import axios from "axios";
+import "./task.css"
 import React, { useEffect, useState } from "react";
 import { formatDate } from "../functions/dateFormater";
 
@@ -70,12 +71,6 @@ const Task = () => {
     width: "200px",
     textAlign: "center",
   };
-  const buttonStyle = {
-    marginTop: "10px",
-    padding: "8px 20px",
-    borderRadius: "15px",
-    cursor: "pointer",
-  };
   const tableDiv = {
     margin: "1rem auto",
     borderRadius: "2rem",
@@ -101,10 +96,10 @@ const Task = () => {
       <div style={mainDiv}>
         <div style={taskContainer}>
           <div style={buttonConteainer}>
-            <button style={buttonStyle} onClick={togglePendingTask}>Pending Task</button>
+            <button className="buttonHov" onClick={togglePendingTask}>Pending Task</button>
           </div>
           <div style={buttonConteainer}>
-            <button style={buttonStyle} onClick={toggleCompletedTask}>Completed Task</button>
+            <button className="buttonHov" onClick={toggleCompletedTask}>Completed Task</button>
           </div>
         </div>
       </div>

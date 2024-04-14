@@ -1,0 +1,16 @@
+.buttonHov{
+    margin-top: 10px;
+    padding: 8px 20px;
+    border:1px solid transparent;
+    /* border-radius: 15px; */
+    cursor: pointer;  
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.buttonHov:hover{
+  padding: 8px 20px;
+  border: 1px solid black;
+  border-radius: 15px;
+  color: whitesmoke !important;
+  background-color: thistle;
+}
