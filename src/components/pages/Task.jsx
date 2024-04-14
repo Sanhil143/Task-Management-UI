@@ -25,7 +25,6 @@ const Task = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data,url)
       if (response.data) {
         setTask(response.data);
       }
@@ -67,7 +66,7 @@ const Task = () => {
     justifyContent: "center",
     marginTop: "10px",
   };
-  const buttonConteainer = {
+  const buttonContainer = {
     width: "200px",
     textAlign: "center",
   };
@@ -85,8 +84,8 @@ const Task = () => {
     backgroundColor: "teal",
   };
   const tableht = {
-    border: "1px solid blue",
-    minWidth: "19rem",
+    border: "1px solid teal",
+    minWidth: "15rem",
     padding: "0.3rem",
     lineHeight: "1.5",
   };
@@ -95,10 +94,10 @@ const Task = () => {
     <div>
       <div style={mainDiv}>
         <div style={taskContainer}>
-          <div style={buttonConteainer}>
+          <div style={buttonContainer}>
             <button className="buttonHov" onClick={togglePendingTask}>Pending Task</button>
           </div>
-          <div style={buttonConteainer}>
+          <div style={buttonContainer}>
             <button className="buttonHov" onClick={toggleCompletedTask}>Completed Task</button>
           </div>
         </div>
@@ -110,6 +109,7 @@ const Task = () => {
               <th style={tableht}>Task_Id</th>
               <th style={tableht}>Title</th>
               <th style={tableht}>Status</th>
+              <th style={tableht}>Assign_Date</th>
               <th style={tableht}>Due_Date</th>
             </tr>
           </thead>
@@ -142,6 +142,15 @@ const Task = () => {
                   }}
                 >
                   {tasks.status}
+                </td>
+                <td
+                  style={{
+                    ...tableht,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {formatDate(tasks.createdAt)}
                 </td>
                 <td
                   style={{
