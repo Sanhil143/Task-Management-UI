@@ -1,0 +1,15 @@
+.btnStyle{
+  width:80px;
+  padding:7px;
+  border: 1px solid transparent;
+  cursor: pointer;  
+  transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.btnStyle:hover{
+  padding:7px;
+  border: 1px solid black;
+  border-radius: 15px;
+  color: whitesmoke !important;
+  background-color: rgb(169, 5, 19);
+}
