@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {formatDate} from "../functions/dateFormater";
+import { formatDate } from "../functions/dateFormater";
+import TeamDetails from "./TeamDetails";
 
 const Team = () => {
   const [team, setTeam] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+
   const accessToken = localStorage.getItem("accessToken");
   const userId = localStorage.getItem("userId");
 
@@ -16,20 +19,25 @@ const Team = () => {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log(response.data);
       if (response.data) {
         setTeam(response.data);
       }
-      console.log("team",team);
     } catch (error) {
       console.error(error.message);
     }
   };
 
   useEffect(() => {
-    fetchTeams()
-  },[]);
+    fetchTeams();
+  }, []);
 
+  const handleRowClick = (selectedTeam) => {
+    setSelectedTeam(selectedTeam);
+  };
+
+  const handleCancelButton = () => {
+    setSelectedTeam(null);
+  };
 
   const tableDiv = {
     margin: "1rem auto",
@@ -49,13 +57,15 @@ const Team = () => {
     minWidth: "15rem",
     padding: "0.3rem",
     lineHeight: "1.5",
+    cursor: "pointer",
   };
+
   return (
     <div>
       <div>
         <h2 style={{ textAlign: "center" }}>My Teams</h2>
       </div>
-      <div style={{marginTop:"44.5px"}}>
+      <div style={{ marginTop: "44.5px" }}>
         <table style={tableDiv}>
           <thead style={tableHead}>
             <tr>
@@ -68,7 +78,7 @@ const Team = () => {
           </thead>
           <tbody>
             {team.map((teams) => (
-              <tr key={teams.teamId}>
+              <tr key={teams.teamId} onClick={() => handleRowClick(teams)}>
                 <td
                   style={{
                     ...tableht,
@@ -85,7 +95,7 @@ const Team = () => {
                     textAlign: "center",
                   }}
                 >
-                  {(teams.name)}
+                  {teams.name}
                 </td>
                 <td
                   style={{
@@ -119,6 +129,7 @@ const Team = () => {
           </tbody>
         </table>
       </div>
+      <TeamDetails team={selectedTeam} cancel={handleCancelButton} />
     </div>
   );
 };
