@@ -1,10 +1,18 @@
 import React from "react";
 import "./navbar.css";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ setPage }) => {
+  const navigate = useNavigate()
+  const firstName = localStorage.getItem("name");
   const handleClick = (page) => {
     setPage(page);
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/')
+  }
 
   const mainDiv = {
     height: "50px",
@@ -55,7 +63,12 @@ const Navbar = ({ setPage }) => {
         </ul>
       </div>
       <ul style={ul2Div}>
-        <li className="liDiv">Logout</li>
+        <h3
+          style={{ marginRight: "20px", width: "250px", textAlign: "center" }}
+        >
+          Hi {firstName}❤️
+        </h3>
+        <li className="liDiv" onClick={handleLogout}>Logout</li>
       </ul>
     </div>
   );

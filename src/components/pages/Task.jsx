@@ -1,11 +1,169 @@
-import React from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { formatDate } from "../functions/dateFormater";
 
 const Task = () => {
+  const [task, setTask] = useState([]);
+  const [showPending, setShowPending] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(false)
+  const [initialFetch, setInitialFetch] = useState(true)
+  const userId = localStorage.getItem("userId");
+  const accessToken = localStorage.getItem("accessToken");
+
+  const fetchTasks = async () => {
+    try {
+      let url = `http://localhost:5000/task/assignee/${userId}`;
+      if (showPending) {
+        url = `http://localhost:5000/task/pending/${userId}`;
+      }
+      if(showCompleted){
+        url = `http://localhost:5000/task/completed/${userId}`; 
+      }
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response.data,url)
+      if (response.data) {
+        setTask(response.data);
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if(initialFetch){
+      fetchTasks()
+      setInitialFetch(false)
+    }else{
+      fetchTasks()
+    }
+  }, [showPending,showCompleted]);
+
+  const togglePendingTask = () => {
+    setShowPending(!showPending);
+    setShowCompleted(false)
+  };
+  const toggleCompletedTask = () => {
+    setShowCompleted(!showCompleted);
+    setShowPending(false)
+  }
+
+  //variable css
+  const mainDiv = {
+    display: "flex",
+    justifyContent: "center",
+    height: "80px",
+    width: "100%",
+    overflow: "hidden",
+  };
+  const taskContainer = {
+    display: "flex",
+    width: "100%",
+    height: "60px",
+    justifyContent: "center",
+    marginTop: "10px",
+  };
+  const buttonConteainer = {
+    width: "200px",
+    textAlign: "center",
+  };
+  const buttonStyle = {
+    marginTop: "10px",
+    padding: "8px 20px",
+    borderRadius: "15px",
+    cursor: "pointer",
+  };
+  const tableDiv = {
+    margin: "1rem auto",
+    borderRadius: "2rem",
+    border: "1rem hidden #443c68",
+    borderCollapse: "collapse",
+    boxShadow: "0 0 0 1px black",
+    overflow: "hidden",
+    maxWidth: "60rem",
+  };
+  const tableHead = {
+    fontSize: "1rem",
+    backgroundColor: "teal",
+  };
+  const tableht = {
+    border: "1px solid blue",
+    minWidth: "19rem",
+    padding: "0.3rem",
+    lineHeight: "1.5",
+  };
+
   return (
     <div>
-      <h1>Task</h1>
+      <div style={mainDiv}>
+        <div style={taskContainer}>
+          <div style={buttonConteainer}>
+            <button style={buttonStyle} onClick={togglePendingTask}>Pending Task</button>
+          </div>
+          <div style={buttonConteainer}>
+            <button style={buttonStyle} onClick={toggleCompletedTask}>Completed Task</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <table style={tableDiv}>
+          <thead style={tableHead}>
+            <tr>
+              <th style={tableht}>Task_Id</th>
+              <th style={tableht}>Title</th>
+              <th style={tableht}>Status</th>
+              <th style={tableht}>Due_Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {task.map((tasks) => (
+              <tr key={tasks.taskId}>
+                <td
+                  style={{
+                    ...tableht,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {tasks.taskId}
+                </td>
+                <td
+                  style={{
+                    ...tableht,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {tasks.description}
+                </td>
+                <td
+                  style={{
+                    ...tableht,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {tasks.status}
+                </td>
+                <td
+                  style={{
+                    ...tableht,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                  }}
+                >
+                  {formatDate(tasks.due_date)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Task
+export default Task;
