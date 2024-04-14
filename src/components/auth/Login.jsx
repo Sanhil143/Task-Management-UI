@@ -17,9 +17,11 @@ const Login = () => {
         formdata
       );
       if (response.data) {
+        console.log(response.data);
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userType", response.data.userType);
+        localStorage.setItem("name", response.data.firstName);
         navigate('/dashboard')
       }
     } catch (error) {
