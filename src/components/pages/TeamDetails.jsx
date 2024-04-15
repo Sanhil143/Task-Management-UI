@@ -23,7 +23,6 @@ const TeamDetails = ({ team, cancel }) => {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
-      console.log(response.data);
       if (response.data) {
         setTeamMember(response.data);
       }
@@ -33,13 +32,14 @@ const TeamDetails = ({ team, cancel }) => {
   };
 
   const tableDiv = {
+    width:"600px",
     margin: "1rem auto",
     borderRadius: "0.5rem",
-    border: "1rem hidden #443c68",
+    border:'1px hidden blue',
     borderCollapse: "collapse",
-    boxShadow: "0 0 0 1px black",
+    boxShadow: "0 4px 5px teal",
     overflow: "hidden",
-    maxWidth: "60rem",
+
   };
   const tableHead = {
     fontSize: "0.9rem",
@@ -47,10 +47,12 @@ const TeamDetails = ({ team, cancel }) => {
   };
   const tableht = {
     border: "1px solid teal",
-    minWidth: "9rem",
+    width:"200px",
     padding: "0.2rem",
     lineHeight: "2",
     cursor: "pointer",
+    textAlign:"left",
+    paddingLeft: "25px", 
   };
   return (
     <div
@@ -62,9 +64,9 @@ const TeamDetails = ({ team, cancel }) => {
         backgroundColor: "white",
         padding: "1rem",
         borderRadius: "0.5rem",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0 3px 10px teal",
         height: "500px",
-        width: "500px",
+        width: "600px",
         textAlign: "center",
       }}
     >
@@ -85,13 +87,13 @@ const TeamDetails = ({ team, cancel }) => {
           <tbody>
             {teamMember.map((teamMem) => (
               <tr key={teamMem.userId}>
-                <td style={{ padding: "5px", lineHeight: "25px" }}>
+                <td style={{ textAlign: "left",paddingLeft: "25px", lineHeight: "25px" ,width:"200px"}}>
                   {teamMem.userId}
                 </td>
-                <td>
+                <td style={{ padding: "5px", lineHeight: "25px" ,width:"200px",textAlign: "left" }}>
                   {teamMem.firstName} {teamMem.lastName}
                 </td>
-                <td>{teamMem.email}</td>
+                <td style={{ padding: "5px", lineHeight: "25px" ,width:"200px",textAlign: "left"}}>{teamMem.email}</td>
               </tr>
             ))}
           </tbody>
