@@ -20,8 +20,8 @@ const Navbar = ({ setPage }) => {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    borderBottom: "1px solid grey",
-    boxShadow:"0 4px 5px grey"
+    borderBottom: "1px solid silver",
+    boxShadow:"0 4px 5px silver"
   };
   const h1Div = {
     marginLeft: "10px",

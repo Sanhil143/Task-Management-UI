@@ -60,6 +60,7 @@ const Team = () => {
     cursor: "pointer",
   };
 
+
   return (
     <div>
       <div>
