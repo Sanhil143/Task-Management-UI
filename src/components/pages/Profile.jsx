@@ -70,7 +70,8 @@ const Profile = () => {
           },
         });
         if (response.data) {
-          console.log(response.data);
+          console.log(response.data.data.firstName);
+          localStorage.setItem('name',response.data.data.firstName)
           setIsNameModalOpen(false);
           fetchUser()
           setNewFirstName("");

@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ setPage }) => {
+  const [name,setName] = useState(localStorage.getItem("name"))
   const navigate = useNavigate()
+
   const firstName = localStorage.getItem("name");
+
+  useEffect(() => {
+    setName(localStorage.getItem(name))
+  },[])
   const handleClick = (page) => {
     setPage(page);
   };
