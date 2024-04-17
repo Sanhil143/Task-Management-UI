@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "./navbar.css";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ setPage }) => {
+const AdminNavbar = ({setPage}) => {
   const [name,setName] = useState(localStorage.getItem("name"))
   const navigate = useNavigate()
-
   const firstName = localStorage.getItem("name");
 
   useEffect(() => {
@@ -70,6 +68,7 @@ const Navbar = ({ setPage }) => {
         </ul>
       </div>
       <ul style={ul2Div}>
+      <h4>Admin</h4>
         <h3
           style={{ marginRight: "20px", width: "250px", textAlign: "center" }}
         >
@@ -78,7 +77,7 @@ const Navbar = ({ setPage }) => {
         <li className="liDiv" onClick={handleLogout}>Logout</li>
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default AdminNavbar
