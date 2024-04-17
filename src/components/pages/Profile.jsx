@@ -6,6 +6,7 @@ import { AiTwotoneEdit } from "react-icons/ai";
 const Profile = () => {
   const [user, setUser] = useState({});
   const [isNameModalOpen, setIsNameModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -35,11 +36,16 @@ const Profile = () => {
     fetchUser();
   }, [handleUpdateUserInfo]);
 
-  const handleEditClick = () => {
-    setIsNameModalOpen(true);
+  const handleEditClick = (arg) => {
+    if (arg === "name") {
+      setIsNameModalOpen(true);
+    } else if (arg === "email") {
+      setIsEmailModalOpen(true);
+    }
   };
   const handleCloseModel = () => {
     setIsNameModalOpen(false);
+    setIsEmailModalOpen(false);
   };
   const handleFirstNameChange = (e) => {
     setNewFirstName(e.target.value);
@@ -53,27 +59,26 @@ const Profile = () => {
 
   handleUpdateUserInfo = async () => {
     try {
-      let data = {}
-      if(newFirstName !== ""){
-        data.firstName = newFirstName
+      let data = {};
+      if (newFirstName !== "") {
+        data.firstName = newFirstName;
       }
-      if(newLastName !== ""){
-        data.lastName = newLastName
+      if (newLastName !== "") {
+        data.lastName = newLastName;
       }
-      if(newEmail !== ""){
-        data.email = newEmail
+      if (newEmail !== "") {
+        data.email = newEmail;
       }
-      if(Object.keys(data).length >= 1){
-        const response = await axios.patch(url,data, {
+      if (Object.keys(data).length >= 1) {
+        const response = await axios.patch(url, data, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         });
         if (response.data) {
-          console.log(response.data.data.firstName);
-          localStorage.setItem('name',response.data.data.firstName)
+          localStorage.setItem("name", response.data.data.firstName);
           setIsNameModalOpen(false);
-          fetchUser()
+          fetchUser();
           setNewFirstName("");
           setNewLastName("");
         }
@@ -171,12 +176,12 @@ const Profile = () => {
             <div
               style={{
                 marginLeft: "15px",
-                width: "50px",
+                width: "80px",
                 position: "absolute",
-                right: "160px",
+                right: "70px",
                 cursor: "pointer",
               }}
-              onClick={handleEditClick}
+              onClick={() => handleEditClick("name")}
             >
               <AiTwotoneEdit style={{ fontSize: "24px" }} />
             </div>
@@ -212,20 +217,20 @@ const Profile = () => {
             </div>
             <div
               style={{
-                marginLeft: "15px",
-                width: "50px",
+                marginLeft: "55px",
+                width: "80px",
                 position: "absolute",
-                right: "160px",
+                right: "70px",
                 cursor: "pointer",
               }}
-              onClick={handleEditClick}
+              onClick={() => handleEditClick("email")}
             >
               <AiTwotoneEdit style={{ fontSize: "24px" }} />
             </div>
           </div>
         </div>
-        <div>
-          <p>Joined at {formatDate(user.createdAt)}</p>
+        <div style={{ marginTop: "200px" }}>
+          <p>Joined at {formatDate(user.createdAt)} ❤️</p>
         </div>
       </div>
       {isNameModalOpen && (
@@ -265,6 +270,62 @@ const Profile = () => {
               value={newLastName}
               onChange={handleLastNameChange}
               placeholder="type new last name"
+            />
+            <button
+              style={{
+                display: "block",
+                margin: "0 auto",
+                textAlign: "center",
+                marginTop: "5px",
+              }}
+              onClick={handleUpdateUserInfo}
+            >
+              OK
+            </button>
+            <button
+              style={{
+                display: "block",
+                margin: "0 auto",
+                textAlign: "center",
+                marginTop: "5px",
+              }}
+              onClick={handleCloseModel}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+      {isEmailModalOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 200,
+            left: 620,
+            width: "300px",
+            height: "300px",
+            backgroundColor: "rgba(0, 0, 0, 0.2)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: "1px solid black",
+            boxShadow: "0 3px 10px teal",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "2rem",
+              borderRadius: "0.5rem",
+              boxShadow: "0 3px 10px teal",
+            }}
+          >
+            <input
+              style={{ display: "block", padding: "5px", marginTop: "5px" }}
+              type="text"
+              value={newEmail}
+              onChange={handleEmailChange}
+              placeholder="type new email"
             />
             <button
               style={{

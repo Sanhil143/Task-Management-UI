@@ -22,7 +22,12 @@ const Login = () => {
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userType", response.data.userType);
         localStorage.setItem("name", response.data.firstName);
-        navigate('/dashboard')
+        if(response.data.userType === 'admin'){
+          navigate('/adminDashboard')
+        }
+        else{
+          navigate('/dashboard')
+        }
       }
     } catch (error) {
       console.error(error.message);

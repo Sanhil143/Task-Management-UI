@@ -19,12 +19,16 @@ const Signup = () => {
         formdata
       );
       if (response.data.data) {
-        console.log(response.data.data);
         localStorage.setItem("accessToken", response.data.token);
         localStorage.setItem("userId", response.data.data.id);
         localStorage.setItem("userType", response.data.data.role);
         localStorage.setItem("name", response.data.data.firstName);
-        navigate('/dashboard')
+        if(response.data.data.role === 'admin'){
+          navigate('/adminDashboard')
+        }
+        else{
+          navigate('/dashboard')
+        }
       }
     } catch (error) {
       console.error(error.message);
