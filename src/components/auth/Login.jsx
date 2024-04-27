@@ -16,6 +16,7 @@ const Login = () => {
         "http://localhost:5000/auth/login",
         formdata
       );
+      console.log(response);
       if (response.data) {
         console.log(response.data);
         localStorage.setItem("accessToken", response.data.token);
