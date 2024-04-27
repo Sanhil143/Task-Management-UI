@@ -32,14 +32,13 @@ const TeamDetails = ({ team, cancel }) => {
   };
 
   const tableDiv = {
-    width:"600px",
+    width: "600px",
     margin: "1rem auto",
     borderRadius: "0.5rem",
-    border:'1px hidden blue',
+    border: "1px hidden blue",
     borderCollapse: "collapse",
     boxShadow: "0 4px 5px teal",
     overflow: "hidden",
-
   };
   const tableHead = {
     fontSize: "0.9rem",
@@ -47,62 +46,100 @@ const TeamDetails = ({ team, cancel }) => {
   };
   const tableht = {
     border: "1px solid teal",
-    width:"200px",
+    width: "200px",
     padding: "0.2rem",
     lineHeight: "2",
     cursor: "pointer",
-    textAlign:"left",
-    paddingLeft: "25px", 
+    textAlign: "left",
+    paddingLeft: "25px",
   };
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "white",
-        padding: "1rem",
-        borderRadius: "0.5rem",
-        boxShadow: "0 3px 10px teal",
-        height: "500px",
-        width: "600px",
-        textAlign: "center",
-      }}
-    >
-      <h2>{team.name}</h2>
+    <>
+      <div
+        onClick={cancel}
+        style={{
+          position: "fixed",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100vh",
+          backdropFilter: "blur(5px)",
+          zIndex: 1,
+        }}
+      ></div>
       <div
         style={{
-          height: "400px",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "white",
+          padding: "1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 3px 10px teal",
+          height: "500px",
+          width: "600px",
+          textAlign: "center",
+          zIndex: 2,
         }}
       >
-        <table style={tableDiv}>
-          <thead style={tableHead}>
-            <tr>
-              <th style={tableht}>Id</th>
-              <th style={tableht}>Name</th>
-              <th style={tableht}>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teamMember.map((teamMem) => (
-              <tr key={teamMem.userId}>
-                <td style={{ textAlign: "left",paddingLeft: "25px", lineHeight: "25px" ,width:"200px"}}>
-                  {teamMem.userId}
-                </td>
-                <td style={{ padding: "5px", lineHeight: "25px" ,width:"200px",textAlign: "left" }}>
-                  {teamMem.firstName} {teamMem.lastName}
-                </td>
-                <td style={{ padding: "5px", lineHeight: "25px" ,width:"200px",textAlign: "left"}}>{teamMem.email}</td>
+        <h2>{team.name}</h2>
+        <div
+          style={{
+            height: "400px",
+          }}
+        >
+          <table style={tableDiv}>
+            <thead style={tableHead}>
+              <tr>
+                <th style={tableht}>Id</th>
+                <th style={tableht}>Name</th>
+                <th style={tableht}>Email</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {teamMember.map((teamMem) => (
+                <tr key={teamMem.userId}>
+                  <td
+                    style={{
+                      textAlign: "left",
+                      paddingLeft: "25px",
+                      lineHeight: "25px",
+                      width: "200px",
+                    }}
+                  >
+                    {teamMem.userId}
+                  </td>
+                  <td
+                    style={{
+                      padding: "5px",
+                      lineHeight: "25px",
+                      width: "200px",
+                      textAlign: "left",
+                    }}
+                  >
+                    {teamMem.firstName} {teamMem.lastName}
+                  </td>
+                  <td
+                    style={{
+                      padding: "5px",
+                      lineHeight: "25px",
+                      width: "200px",
+                      textAlign: "left",
+                    }}
+                  >
+                    {teamMem.email}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <button className="btnStyle" onClick={cancel}>
+          Close
+        </button>
       </div>
-      <button className="btnStyle" onClick={cancel}>
-        Close
-      </button>
-    </div>
+    </>
   );
 };
 
